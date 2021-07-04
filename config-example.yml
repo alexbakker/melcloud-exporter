@@ -1,0 +1,6 @@
+prometheus:
+  addr: ":9998"
+melcloud:
+  email: "test@example.com"
+  password: "password"
+  refresh_interval: 60 # seconds
