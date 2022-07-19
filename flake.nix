@@ -3,7 +3,7 @@
 
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-21.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
   };
 
   outputs = { self, flake-utils, nixpkgs }: 
@@ -12,8 +12,7 @@
       rec {
         defaultPackage = with pkgs;
           buildGoModule rec {
-            pname = "melcloud-exporter";
-            version = "0.0.0";
+            name = "melcloud-exporter";
             src = self;
 
             vendorSha256 = "sha256-5iXY9UBuVVEbxuJSB6uuwGfvaDlpX/ux3gNJKOszIbw=";
