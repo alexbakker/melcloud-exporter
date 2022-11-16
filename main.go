@@ -24,6 +24,10 @@ var (
 		Name: "melcloud_device_power",
 		Help: "Whether the device is powered on",
 	}, deviceLabelNames)
+	gaugeDeviceMode = promauto.NewGaugeVec(prometheus.GaugeOpts{
+		Name: "melcloud_device_mode",
+		Help: "The mode that the device is operating in (1 = heat, 2 = dry, 3 = cool, 7 = vent, 8 = auto)",
+	}, deviceLabelNames)
 	gaugeDeviceTemperatureRoom = promauto.NewGaugeVec(prometheus.GaugeOpts{
 		Name: "melcloud_device_temperature_room",
 		Help: "The current temperature in the room a device is in",
@@ -92,6 +96,7 @@ func updateData() error {
 		}
 
 		gaugeDevicePower.With(labels).Set(float64(power))
+		gaugeDeviceMode.With(labels).Set(float64(dev.Device.OperationMode))
 		gaugeDeviceTemperatureRoom.With(labels).Set(float64(dev.Device.RoomTemperature))
 		gaugeDeviceTemperatureSet.With(labels).Set(float64(dev.Device.SetTemperature))
 	}

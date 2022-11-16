@@ -38,6 +38,7 @@ type Device struct {
 		RoomTemperature float64
 		SetTemperature  float64
 		Power           bool
+		OperationMode   int
 	}
 }
 
