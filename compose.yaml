@@ -1,0 +1,9 @@
+services:
+  server:
+    build:
+      context: .
+      target: final
+    ports:
+      - 9998:9998
+    volumes:
+      - ./config-example.yml:/etc/config/config.yml
