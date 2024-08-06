@@ -86,6 +86,7 @@ func (c *Client) Login(email, password string) error {
 	}
 
 	c.key = &resBody.LoginData.ContextKey
+	fmt.Printf("Login Successful\n")
 	return nil
 }
 

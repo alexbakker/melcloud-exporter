@@ -55,6 +55,8 @@ RUN --mount=type=cache,target=/var/cache/apk \
     && \
     update-ca-certificates
 
+RUN mkdir -p /etc/config
+
 # Create a non-privileged user that the app will run under.
 # See https://docs.docker.com/go/dockerfile-user-best-practices/
 ARG UID=10001
@@ -68,7 +70,7 @@ RUN adduser \
     appuser
 USER appuser
 
-RUN mkdir /etc/config
+
 # Copy the executable from the "build" stage.
 COPY --from=build /bin/server /bin/
 COPY config-example.yml /etc/config/config.yml
