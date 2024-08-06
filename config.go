@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 
 	"gopkg.in/yaml.v2"
@@ -32,6 +33,6 @@ func ReadConfig(filename string) (*Config, error) {
 	if err = yaml.NewDecoder(file).Decode(&config); err != nil {
 		return nil, err
 	}
-
+	fmt.Printf("Login Successful")
 	return &config, nil
 }
