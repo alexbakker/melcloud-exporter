@@ -20,6 +20,7 @@ type Building struct {
 	Structure struct {
 		Floors  []*Floor
 		Devices []*Device
+		Areas   []*Area
 	}
 }
 
@@ -28,6 +29,20 @@ type Floor struct {
 	Name       string
 	BuildingId int
 	Devices    []*Device
+}
+
+type Area struct {
+	ID             int
+	Name           string
+	BuildingId     int
+	FloorId        int
+	AccessLevel    int
+	DirectAccess   bool
+	EndDate        string
+	MinTemperature float64
+	MaxTemperature float64
+	Expanded       bool
+	Devices        []*Device
 }
 
 type Device struct {
@@ -97,9 +112,19 @@ func (c *Client) Devices() ([]*Device, error) {
 
 	var devices []*Device
 	for _, building := range buildings {
+
 		devices = append(devices, building.Structure.Devices...)
-		for _, floor := range building.Structure.Floors {
-			devices = append(devices, floor.Devices...)
+
+		if building.Structure.Floors != nil {
+			for _, floor := range building.Structure.Floors {
+				devices = append(devices, floor.Devices...)
+			}
+		}
+
+		if building.Structure.Areas != nil {
+			for _, area := range building.Structure.Areas {
+				devices = append(devices, area.Devices...)
+			}
 		}
 	}
 
