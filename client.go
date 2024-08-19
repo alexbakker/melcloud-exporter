@@ -50,10 +50,14 @@ type Device struct {
 	DeviceName string
 	BuildingID int
 	Device     struct {
-		RoomTemperature float64
-		SetTemperature  float64
-		Power           bool
-		OperationMode   int
+		RoomTemperature       float64
+		SetTemperature        float64
+		Power                 bool
+		OperationMode         int
+		ActualFanSpeed        int
+		AutomaticFanSpeed     bool
+		CurrentEnergyConsumed int
+		DemandPercentage      int
 	}
 }
 

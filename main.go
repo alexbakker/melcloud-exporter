@@ -36,6 +36,22 @@ var (
 		Name: "melcloud_device_temperature_set",
 		Help: "The temperature that the device targets to achieve in the room it is in",
 	}, deviceLabelNames)
+	gaugeDeviceAutomaticFanSpeed = promauto.NewGaugeVec(prometheus.GaugeOpts{
+		Name: "melcloud_device_auto_fan_speed",
+		Help: "If the device has auto speed enabled",
+	}, deviceLabelNames)
+	gaugeDeviceFanSpeed = promauto.NewGaugeVec(prometheus.GaugeOpts{
+		Name: "melcloud_device_fan_speed",
+		Help: "The speed of the fan in the device",
+	}, deviceLabelNames)
+	counterCurrentEnergyConsumed = promauto.NewCounter(prometheus.CounterOpts{
+		Name: "melcloud_device_current_energy_consumed",
+		Help: "The current energy consumed by devices",
+	})
+	gaugeDeviceDemandPercentage = promauto.NewGaugeVec(prometheus.GaugeOpts{
+		Name: "melcloud_device_demand_percentage",
+		Help: "The demand percentage of the device",
+	}, deviceLabelNames)
 )
 
 func main() {
@@ -99,6 +115,15 @@ func updateData() error {
 		gaugeDeviceMode.With(labels).Set(float64(dev.Device.OperationMode))
 		gaugeDeviceTemperatureRoom.With(labels).Set(float64(dev.Device.RoomTemperature))
 		gaugeDeviceTemperatureSet.With(labels).Set(float64(dev.Device.SetTemperature))
+		gaugeDeviceFanSpeed.With(labels).Set(float64(dev.Device.ActualFanSpeed))
+		counterCurrentEnergyConsumed.Add(float64(dev.Device.CurrentEnergyConsumed))
+		gaugeDeviceDemandPercentage.With(labels).Set(float64(dev.Device.DemandPercentage))
+
+		autoFanSpeed := 0.0
+		if dev.Device.AutomaticFanSpeed {
+			autoFanSpeed = 1.0
+		}
+		gaugeDeviceAutomaticFanSpeed.With(labels).Set(autoFanSpeed)
 	}
 
 	return nil
