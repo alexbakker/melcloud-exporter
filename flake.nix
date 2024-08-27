@@ -15,7 +15,7 @@
             name = "melcloud-exporter";
             src = self;
 
-            vendorSha256 = "sha256-8GC9/rtfqiXvR1goEM+FR5n9wK3YNs2F/3TB7NXvkXw=";
+            vendorHash = "sha256-8GC9/rtfqiXvR1goEM+FR5n9wK3YNs2F/3TB7NXvkXw=";
           };
         devShell = with pkgs; mkShell {
           buildInputs = [
